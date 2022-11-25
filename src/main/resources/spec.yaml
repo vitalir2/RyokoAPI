@@ -1,0 +1,46 @@
+openapi: 3.0.3
+info:
+  title: RyokoApi
+  description: RyokoApi
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8080'
+paths:
+  /hotels/{hotelId}:
+    get:
+      description: Get hotel by id
+      parameters:
+        - in: path
+          name: hotelId
+          schema:
+            type: integer
+          required: true
+          description: "Hotel ID"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetHotelResponse"
+        404:
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+    GetHotelResponse:
+      type: object
+      properties:
+        hotel:
+          $ref: "#/components/schemas/Hotel"
+    Hotel:
+      type: object
+      # TODO
