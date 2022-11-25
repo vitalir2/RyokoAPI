@@ -7,6 +7,7 @@ plugins {
     kotlin("jvm") version "1.7.21"
     id("io.ktor.plugin") version "2.1.3"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.7.21"
+    id("com.squareup.wire") version "4.4.3"
 }
 
 group = "vitalir.io"
@@ -32,4 +33,25 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+
+    // gRPC
+    val wireVersion = "4.4.3"
+    implementation("com.squareup.wire:wire-runtime:$wireVersion")
+    implementation("com.squareup.wire:wire-grpc-client:$wireVersion")
+
+    val grpcVersion = "1.51.0"
+    implementation("io.grpc:grpc-protobuf:$grpcVersion")
+    implementation("io.grpc:grpc-stub:$grpcVersion")
+    implementation("io.grpc:grpc-netty:$grpcVersion")
+}
+
+wire {
+    sourcePath {
+        srcDir("src/main/proto")
+    }
+    kotlin {
+        rpcRole = "server"
+        rpcCallStyle = "suspending"
+        includes = listOf("ryokoapi.*")
+    }
 }

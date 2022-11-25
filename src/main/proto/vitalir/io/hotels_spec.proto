@@ -1,0 +1,18 @@
+syntax = "proto3";
+package ryokoapi.hotels;
+option java_package = "vitalir.io.hotels";
+
+import "vitalir/io/hotels.proto";
+
+service HotelsService {
+
+  rpc GetHotel (GetHotelRequest) returns (GetHotelResponse);
+}
+
+message GetHotelRequest {
+  int64 hotelId = 1;
+}
+
+message GetHotelResponse {
+  Hotel hotel = 1;
+}
