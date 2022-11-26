@@ -7,6 +7,9 @@ import io.grpc.protobuf.services.ProtoReflectionService
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 
+/**
+ * An [ApplicationEngineFactory] for providing Netty-based gRPC [ApplicationEngine]
+ */
 object GrpcNetty : ApplicationEngineFactory<GrpcNettyApplicationEngine, GrpcNettyApplicationEngine.Configuration> {
 
     override fun create(
@@ -17,13 +20,18 @@ object GrpcNetty : ApplicationEngineFactory<GrpcNettyApplicationEngine, GrpcNett
     }
 }
 
+/**
+ * Simple implementation of [ApplicationEngine] serving gRPC using grpc-netty.
+ *
+ *  DO NOT USE IN PRODUCTION
+ */
 class GrpcNettyApplicationEngine(
     environment: ApplicationEngineEnvironment,
     configure: Configuration.() -> Unit = {},
 ) : BaseApplicationEngine(environment) {
 
-    inner class Configuration : BaseApplicationEngine.Configuration() {
-        var port: Int = application.environment.config.port
+    class Configuration : BaseApplicationEngine.Configuration() {
+        var port: Int? = null
 
         var services: List<BindableService> = emptyList()
 
@@ -35,7 +43,8 @@ class GrpcNettyApplicationEngine(
     }
 
     private val server: Server by lazy {
-        val builder = ServerBuilder.forPort(configuration.port)
+        val serverPort = configuration.port ?: application.environment.config.port
+        val builder = ServerBuilder.forPort(serverPort)
         for (service in configuration.services) {
             builder.addService(service)
         }

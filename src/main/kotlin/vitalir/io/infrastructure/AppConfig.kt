@@ -1,10 +1,12 @@
 package vitalir.io.infrastructure
 
 data class AppConfig(
-    val routingMethod: RoutingMethod,
+    val port: Int,
+    val host: String,
+    val networkApiType: NetworkApiType,
 ) {
 
-    enum class RoutingMethod {
+    enum class NetworkApiType {
         GRPC,
         GRAPHQL,
     }

@@ -2,30 +2,50 @@ package vitalir.io.infrastructure
 
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
-import vitalir.io.infrastructure.grpc.GrpcNetty
+import io.ktor.server.netty.*
 import vitalir.io.infrastructure.grpc.GrpcHotelsService
+import vitalir.io.infrastructure.grpc.GrpcNetty
 import vitalir.io.infrastructure.routing.configureRouting
 
+val appConfig = AppConfig(
+    port = 8080,
+    host = "0.0.0.0",
+    networkApiType = AppConfig.NetworkApiType.GRPC,
+)
+
 fun main() {
-    embeddedServer(
-        factory = GrpcNetty,
-        port = 8080,
-        host = "0.0.0.0",
-        module = Application::module,
-        configure = {
+    embeddedServer(appConfig)
+}
+
+fun embeddedServer(appConfig: AppConfig) {
+    val serverEngineData = when (appConfig.networkApiType) {
+        AppConfig.NetworkApiType.GRPC -> ServerEngineData(GrpcNetty) {
+            // TODO build services from custom Routing plugin
             services = listOf(
                 GrpcHotelsService(),
             )
             withReflection = true
         }
-    )
-        .start(wait = true)
+        AppConfig.NetworkApiType.GRAPHQL -> ServerEngineData(Netty)
+    }
+    embeddedServer(serverEngineData, appConfig.port, appConfig.host)
+}
+
+fun <TEngine : ApplicationEngine, TConfiguration : ApplicationEngine.Configuration> embeddedServer(
+    serverEngineData: ServerEngineData<TEngine, TConfiguration>,
+    port: Int,
+    host: String,
+) {
+    embeddedServer(
+        factory = serverEngineData.factory,
+        port = port,
+        host = host,
+        module = Application::module,
+        configure = serverEngineData.configure,
+    ).start(wait = true)
 }
 
 fun Application.module() {
-    val appConfig = AppConfig(
-        routingMethod = AppConfig.RoutingMethod.GRPC,
-    )
     configureSerialization()
     configureRouting(appConfig)
 }

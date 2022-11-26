@@ -14,15 +14,13 @@ fun Application.configureRouting(appConfig: AppConfig) {
         }
     }
     routing {
-        when (appConfig.routingMethod) {
-            AppConfig.RoutingMethod.GRPC -> gRPCRouting()
-            AppConfig.RoutingMethod.GRAPHQL -> graphQLRouting()
+        when (appConfig.networkApiType) {
+            AppConfig.NetworkApiType.GRPC -> {
+                // No explicit routing yet
+            }
+            AppConfig.NetworkApiType.GRAPHQL -> graphQLRouting()
         }
     }
-}
-
-private fun Routing.gRPCRouting() {
-    // TODO
 }
 
 private fun Routing.graphQLRouting() {
