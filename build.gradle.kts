@@ -1,13 +1,23 @@
+import com.google.protobuf.gradle.builtins
+import com.google.protobuf.gradle.generateProtoTasks
+import com.google.protobuf.gradle.id
+import com.google.protobuf.gradle.plugins
+import com.google.protobuf.gradle.protobuf
+import com.google.protobuf.gradle.protoc
+
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
+val protobufVersion = "3.21.9"
+val grpcVersion = "1.51.0"
+val grpcKotlinVersion = "1.3.0"
 
 plugins {
     application
     kotlin("jvm") version "1.7.21"
     id("io.ktor.plugin") version "2.1.3"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.7.21"
-    id("com.squareup.wire") version "4.4.3"
+    id("com.google.protobuf") version "0.8.18"
 }
 
 group = "vitalir.io"
@@ -35,23 +45,43 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 
     // gRPC
-    val wireVersion = "4.4.3"
-    implementation("com.squareup.wire:wire-runtime:$wireVersion")
-    implementation("com.squareup.wire:wire-grpc-client:$wireVersion")
-
-    val grpcVersion = "1.51.0"
     implementation("io.grpc:grpc-protobuf:$grpcVersion")
     implementation("io.grpc:grpc-stub:$grpcVersion")
     implementation("io.grpc:grpc-netty:$grpcVersion")
+    implementation("com.google.protobuf:protobuf-java-util:$protobufVersion")
+    implementation("com.google.protobuf:protobuf-kotlin:$protobufVersion")
+    implementation("io.grpc:grpc-kotlin-stub:$grpcKotlinVersion")
+    implementation("io.grpc:grpc-services:$grpcVersion")
 }
 
-wire {
-    sourcePath {
-        srcDir("src/main/proto")
+java.sourceSets["main"].java {
+    val protoDirs = listOf("java", "kotlin", "grpc", "grpckt")
+    for (protoDirName in protoDirs) {
+        srcDir("build/generated/source/proto/main/$protoDirName")
     }
-    kotlin {
-        rpcRole = "server"
-        rpcCallStyle = "suspending"
-        includes = listOf("ryokoapi.*")
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:$protobufVersion"
+    }
+    plugins {
+        id("grpc") {
+            artifact = "io.grpc:protoc-gen-grpc-java:$grpcVersion"
+        }
+        id("grpckt") {
+            artifact = "io.grpc:protoc-gen-grpc-kotlin:$grpcKotlinVersion:jdk8@jar"
+        }
+    }
+    generateProtoTasks {
+        all().forEach {
+            it.plugins {
+                id("grpc")
+                id("grpckt")
+            }
+            it.builtins {
+                id("kotlin")
+            }
+        }
     }
 }
