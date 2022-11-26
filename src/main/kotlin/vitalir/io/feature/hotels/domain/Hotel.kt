@@ -12,15 +12,15 @@ data class Hotel(
 ) {
 
     @JvmInline
-    value class Id(val id: Int)
+    value class Id(val value: Long)
 
     data class CommonInfo(
         val title: String,
-        val tags: List<Tag>,
         val location: Location,
-        val photos: List<Photo>,
-        val facilities: List<Facility>,
-        val description: String,
+        val tags: List<Tag> = emptyList(),
+        val photos: List<Photo> = emptyList(),
+        val facilities: List<Facility> = emptyList(),
+        val description: String = "",
     ) {
 
         data class Tag(
@@ -51,10 +51,10 @@ data class Hotel(
     )
 
     data class HouseRules(
-        val check: Duration,
+        val checkInTime: Duration,
         val checkOutTime: Duration,
-        val childPolicy: ChildPolicy,
-        val allowance: Allowance,
+        val allowance: Allowance = Allowance(),
+        val childPolicy: ChildPolicy? = null,
     ) {
 
         data class ChildPolicy(
@@ -62,9 +62,9 @@ data class Hotel(
         )
 
         data class Allowance(
-            val smoking: Boolean,
-            val parties: Boolean,
-            val pets: Boolean,
+            val smoking: Boolean = false,
+            val parties: Boolean = false,
+            val pets: Boolean = false,
         )
     }
 }

@@ -3,9 +3,11 @@ package vitalir.io.common.infrastructure
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import vitalir.io.common.infrastructure.grpc.GrpcHotelsService
+import vitalir.io.feature.hotels.infrastructure.GrpcHotelsService
 import vitalir.io.common.infrastructure.grpc.GrpcNetty
 import vitalir.io.common.infrastructure.routing.configureRouting
+import vitalir.io.feature.hotels.application.GrpcHotelMapper
+import vitalir.io.feature.hotels.infrastructure.StubHotelsRepository
 
 val appConfig = AppConfig(
     port = 8080,
@@ -18,11 +20,13 @@ fun main() {
 }
 
 fun embeddedServer(appConfig: AppConfig) {
+    val apiHotelMapper = GrpcHotelMapper()
+    val hotelsRepository = StubHotelsRepository()
     val serverEngineData = when (appConfig.networkApiType) {
         AppConfig.NetworkApiType.GRPC -> ServerEngineData(GrpcNetty) {
             // TODO build services from custom Routing plugin
             services = listOf(
-                GrpcHotelsService(),
+                GrpcHotelsService(hotelsRepository, apiHotelMapper),
             )
             withReflection = true
         }

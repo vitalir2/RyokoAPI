@@ -18,4 +18,11 @@ data class Currency(
             const val CURRENCY_CODE_LENGTH = 3
         }
     }
+
+    companion object {
+        val US_DOLLAR = Currency(
+            currencyCode = CurrencyCode("USD"),
+            countryId = CountryId.Code.US,
+        )
+    }
 }

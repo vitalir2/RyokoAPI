@@ -4,6 +4,14 @@ sealed interface CountryId {
 
     data class Code(
         val intValue: Int,
-        val isoCode: String,
-    ) : CountryId
+        val shortIso: String,
+    ) : CountryId {
+
+        companion object {
+            val US = Code(
+                intValue = 1,
+                shortIso = "US",
+            )
+        }
+    }
 }
