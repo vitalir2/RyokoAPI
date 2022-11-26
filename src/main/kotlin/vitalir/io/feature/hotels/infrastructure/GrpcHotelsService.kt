@@ -1,5 +1,7 @@
 package vitalir.io.feature.hotels.infrastructure
 
+import io.grpc.Status
+import io.grpc.StatusException
 import vitalir.io.feature.hotels.application.ApiHotelMapper
 import vitalir.io.feature.hotels.domain.Hotel
 import vitalir.io.feature.hotels.domain.HotelsRepository
@@ -14,10 +16,7 @@ internal class GrpcHotelsService(
 ) : HotelsServiceGrpcKt.HotelsServiceCoroutineImplBase() {
     override suspend fun getHotel(request: HotelsSpec.GetHotelRequest): HotelsSpec.GetHotelResponse {
         val hotelId = Hotel.Id(request.hotelId)
-        val domainHotel = hotelsRepository.getHotelById(hotelId) ?: run {
-            // TODO return error object
-            return HotelsSpec.GetHotelResponse.getDefaultInstance()
-        }
+        val domainHotel = hotelsRepository.getHotelById(hotelId) ?: throw StatusException(Status.NOT_FOUND)
         val apiHotel = apiHotelMapper.toApiModel(domainHotel)
         return getHotelResponse {
             hotel = apiHotel
