@@ -1,11 +1,11 @@
-package vitalir.io.infrastructure
+package vitalir.io.common.infrastructure
 
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import vitalir.io.infrastructure.grpc.GrpcHotelsService
-import vitalir.io.infrastructure.grpc.GrpcNetty
-import vitalir.io.infrastructure.routing.configureRouting
+import vitalir.io.common.infrastructure.grpc.GrpcHotelsService
+import vitalir.io.common.infrastructure.grpc.GrpcNetty
+import vitalir.io.common.infrastructure.routing.configureRouting
 
 val appConfig = AppConfig(
     port = 8080,

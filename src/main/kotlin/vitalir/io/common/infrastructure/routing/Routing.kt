@@ -1,11 +1,11 @@
-package vitalir.io.infrastructure.routing
+package vitalir.io.common.infrastructure.routing
 
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import vitalir.io.infrastructure.AppConfig
+import vitalir.io.common.infrastructure.AppConfig
 
 fun Application.configureRouting(appConfig: AppConfig) {
     install(StatusPages) {

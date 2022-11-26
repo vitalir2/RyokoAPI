@@ -1,4 +1,4 @@
-package vitalir.io.infrastructure.grpc
+package vitalir.io.common.infrastructure.grpc
 
 import vitalir.io.hotels.HotelsServiceGrpcKt
 import vitalir.io.hotels.HotelsSpec

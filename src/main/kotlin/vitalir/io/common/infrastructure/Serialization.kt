@@ -1,4 +1,4 @@
-package vitalir.io.infrastructure
+package vitalir.io.common.infrastructure
 
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*

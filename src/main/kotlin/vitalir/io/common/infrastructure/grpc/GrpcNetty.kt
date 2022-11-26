@@ -1,4 +1,4 @@
-package vitalir.io.infrastructure.grpc
+package vitalir.io.common.infrastructure.grpc
 
 import io.grpc.BindableService
 import io.grpc.Server

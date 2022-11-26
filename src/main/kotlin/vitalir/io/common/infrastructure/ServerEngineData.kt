@@ -1,4 +1,4 @@
-package vitalir.io.infrastructure
+package vitalir.io.common.infrastructure
 
 import io.ktor.server.engine.*
 
