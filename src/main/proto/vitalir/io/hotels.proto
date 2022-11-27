@@ -1,7 +1,0 @@
-syntax = "proto3";
-package ryokoapi.hotels;
-option java_package = "vitalir.io.hotels";
-
-message Hotel {
-  int64 id = 1;
-}

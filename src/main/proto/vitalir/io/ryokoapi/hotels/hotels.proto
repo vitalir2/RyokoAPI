@@ -1,0 +1,61 @@
+syntax = "proto3";
+package vitalir.io.ryokoapi.hotels;
+option java_package = "vitalir.io.hotels";
+
+import "vitalir/io/ryokoapi/common/common.proto";
+import "google/type/money.proto";
+
+message Hotel {
+
+  message CommonInfo {
+
+    message Location {
+      string name = 1;
+    }
+
+    message Tag {
+      string text = 1;
+      string description = 2;
+    }
+
+    message Photo {
+      optional string url = 1;
+    }
+
+    message Facility {
+      string name = 1;
+      optional string icon_url = 2;
+    }
+
+    string title = 1;
+    string description = 2;
+    Location location = 3;
+    repeated Tag tags = 4;
+    repeated Photo photos = 5;
+    repeated Facility facilities = 6;
+  }
+
+
+  message HouseRules {
+
+    message ChildPolicy {
+      string content = 1;
+    }
+
+    message Allowance {
+      bool smoking = 1;
+      bool parties = 2;
+      bool pets = 3;
+    }
+
+    vitalir.io.ryokoapi.common.DayDuration check_in = 1;
+    vitalir.io.ryokoapi.common.DayDuration check_out = 2;
+    ChildPolicy child_policy = 3;
+    Allowance allowance = 4;
+  }
+
+  int64 id = 1;
+  CommonInfo common_info = 2;
+  google.type.Money price = 3;
+  HouseRules house_rules = 4;
+}

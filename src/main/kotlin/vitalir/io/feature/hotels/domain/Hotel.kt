@@ -51,8 +51,8 @@ data class Hotel(
     )
 
     data class HouseRules(
-        val checkInTime: Duration,
-        val checkOutTime: Duration,
+        val checkIn: Duration,
+        val checkOut: Duration,
         val allowance: Allowance = Allowance(),
         val childPolicy: ChildPolicy? = null,
     ) {

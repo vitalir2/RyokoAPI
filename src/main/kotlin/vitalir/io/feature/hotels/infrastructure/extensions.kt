@@ -22,8 +22,8 @@ internal fun Hotel.Companion.sample(id: Hotel.Id): Hotel {
             )
         ),
         houseRules = Hotel.HouseRules(
-            checkInTime = Duration(from = DefaultTime(hours = 10), to = DefaultTime(hours = 14)),
-            checkOutTime = Duration(from = DefaultTime(hours = 16), to = DefaultTime(hours = 19)),
+            checkIn = Duration(from = DefaultTime(hours = 10), to = DefaultTime(hours = 14)),
+            checkOut = Duration(from = DefaultTime(hours = 16), to = DefaultTime(hours = 19)),
         ),
     )
 }

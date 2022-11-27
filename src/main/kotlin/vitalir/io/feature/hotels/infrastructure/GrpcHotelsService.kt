@@ -15,7 +15,7 @@ internal class GrpcHotelsService(
     private val apiHotelMapper: ApiHotelMapper<Hotels.Hotel>,
 ) : HotelsServiceGrpcKt.HotelsServiceCoroutineImplBase() {
     override suspend fun getHotel(request: HotelsSpec.GetHotelRequest): HotelsSpec.GetHotelResponse {
-        val hotelId = Hotel.Id(request.hotelId)
+        val hotelId = Hotel.Id(request.id)
         val domainHotel = hotelsRepository.getById(hotelId) ?: throw StatusException(Status.NOT_FOUND)
         val apiHotel = apiHotelMapper.toApiModel(domainHotel)
         return getHotelResponse {

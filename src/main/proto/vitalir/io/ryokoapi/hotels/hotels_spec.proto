@@ -1,8 +1,8 @@
 syntax = "proto3";
-package ryokoapi.hotels;
+package vitalir.io.ryokoapi.hotels;
 option java_package = "vitalir.io.hotels";
 
-import "vitalir/io/hotels.proto";
+import "vitalir/io/ryokoapi/hotels/hotels.proto";
 
 service HotelsService {
 
@@ -10,7 +10,7 @@ service HotelsService {
 }
 
 message GetHotelRequest {
-  int64 hotelId = 1;
+  int64 id = 1;
 }
 
 message GetHotelResponse {

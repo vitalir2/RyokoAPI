@@ -1,0 +1,10 @@
+syntax = "proto3";
+package vitalir.io.ryokoapi.common;
+option java_package = "vitalir.io.common";
+
+import "google/type/time_of_day.proto";
+
+message DayDuration {
+  google.type.TimeOfDay start_time = 1;
+  google.type.TimeOfDay end_time = 2;
+}
