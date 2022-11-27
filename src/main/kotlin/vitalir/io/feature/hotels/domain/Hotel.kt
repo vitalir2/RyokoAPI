@@ -67,4 +67,6 @@ data class Hotel(
             val pets: Boolean = false,
         )
     }
+
+    companion object
 }

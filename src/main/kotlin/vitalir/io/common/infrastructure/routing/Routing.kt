@@ -7,8 +7,10 @@ import io.ktor.server.response.*
 import vitalir.io.common.infrastructure.AppConfig
 import vitalir.io.common.infrastructure.grpc.gRPC
 import vitalir.io.feature.hotels.application.GrpcHotelMapper
+import vitalir.io.feature.hotels.domain.Hotel
 import vitalir.io.feature.hotels.infrastructure.GrpcHotelsService
-import vitalir.io.feature.hotels.infrastructure.StubHotelsRepository
+import vitalir.io.feature.hotels.infrastructure.InMemoryHotelsRepository
+import vitalir.io.feature.hotels.infrastructure.sample
 
 fun Application.configureRouting(appConfig: AppConfig) {
     install(StatusPages) {
@@ -22,7 +24,9 @@ fun Application.configureRouting(appConfig: AppConfig) {
                 withReflection = true
                 services = listOf(
                     GrpcHotelsService(
-                        hotelsRepository = StubHotelsRepository(),
+                        hotelsRepository = InMemoryHotelsRepository {
+                            add(Hotel.sample(Hotel.Id(123)))
+                        },
                         apiHotelMapper = GrpcHotelMapper(),
                     )
                 )
