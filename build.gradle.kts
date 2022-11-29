@@ -51,6 +51,9 @@ dependencies {
     implementation("com.google.protobuf:protobuf-kotlin:$protobufVersion")
     implementation("io.grpc:grpc-kotlin-stub:$grpcKotlinVersion")
     implementation("io.grpc:grpc-services:$grpcVersion")
+
+    // GraphQL
+    implementation("com.apurebase:kgraphql-ktor:0.18.1")
 }
 
 java.sourceSets["main"].java {
@@ -58,6 +61,10 @@ java.sourceSets["main"].java {
     for (protoDirName in protoDirs) {
         srcDir("build/generated/source/proto/main/$protoDirName")
     }
+}
+
+java {
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 protobuf {

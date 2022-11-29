@@ -1,5 +1,6 @@
 package vitalir.io.common.infrastructure.routing
 
+import com.apurebase.kgraphql.GraphQL
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.statuspages.*
@@ -10,6 +11,8 @@ import vitalir.io.feature.hotels.application.GrpcHotelMapper
 import vitalir.io.feature.hotels.domain.Hotel
 import vitalir.io.feature.hotels.infrastructure.GrpcHotelsService
 import vitalir.io.feature.hotels.infrastructure.InMemoryHotelsRepository
+import vitalir.io.feature.hotels.infrastructure.graphql.GraphQLHotelMapper
+import vitalir.io.feature.hotels.infrastructure.graphql.hotelsSchema
 import vitalir.io.feature.hotels.infrastructure.sample
 
 fun Application.configureRouting(appConfig: AppConfig) {
@@ -25,7 +28,7 @@ fun Application.configureRouting(appConfig: AppConfig) {
                 services = listOf(
                     GrpcHotelsService(
                         hotelsRepository = InMemoryHotelsRepository {
-                            add(Hotel.sample(Hotel.Id(123)))
+                            add(Hotel.sample(123))
                         },
                         apiHotelMapper = GrpcHotelMapper(),
                     )
@@ -33,7 +36,18 @@ fun Application.configureRouting(appConfig: AppConfig) {
             }
         }
         AppConfig.NetworkApiType.GRAPHQL -> {
-            // TODO
+            install(GraphQL) {
+                playground = true
+                endpoint = "/graphql"
+                schema {
+                    hotelsSchema(
+                        hotelsRepository = InMemoryHotelsRepository {
+                            add(Hotel.sample(123))
+                        },
+                        apiHotelMapper = GraphQLHotelMapper(),
+                    )
+                }
+            }
         }
     }
 }

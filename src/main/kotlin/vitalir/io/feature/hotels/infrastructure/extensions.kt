@@ -6,9 +6,9 @@ import vitalir.io.common.domain.time.Duration
 import vitalir.io.common.infrastructure.DefaultTime
 import vitalir.io.feature.hotels.domain.Hotel
 
-internal fun Hotel.Companion.sample(id: Hotel.Id): Hotel {
+internal fun Hotel.Companion.sample(id: Long): Hotel {
     return Hotel(
-        id = id,
+        id = Hotel.Id(id),
         commonInfo = Hotel.CommonInfo(
             title = "Hello world!",
             location = Hotel.CommonInfo.Location(
