@@ -3,5 +3,5 @@ RyokoAPI (TravelAPI) is a showcase for different server API contract styles usin
 
 Contract styles
 ---
-- gRPC - implemented by custom plugin
-- GraphQL - ❌
+- gRPC - by custom plugin
+- GraphQL - by KGraphQL Ktor plugin
