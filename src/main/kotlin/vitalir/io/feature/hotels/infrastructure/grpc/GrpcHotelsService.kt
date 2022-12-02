@@ -1,5 +1,6 @@
-package vitalir.io.feature.hotels.infrastructure
+package vitalir.io.feature.hotels.infrastructure.grpc
 
+import com.google.protobuf.Empty
 import io.grpc.Status
 import io.grpc.StatusException
 import vitalir.io.feature.hotels.application.ApiHotelMapper
@@ -21,5 +22,12 @@ internal class GrpcHotelsService(
         return getHotelResponse {
             hotel = apiHotel
         }
+    }
+
+    override suspend fun addHotel(request: HotelsSpec.AddHotelRequest): Empty {
+        val hotelToAdd = request.hotel
+        val domainHotel = apiHotelMapper.toDomainModel(hotelToAdd)
+        hotelsRepository.add(domainHotel)
+        return Empty.getDefaultInstance()
     }
 }

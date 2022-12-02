@@ -16,4 +16,8 @@ internal class InMemoryHotelsRepository(
     override suspend fun getById(id: Hotel.Id): Hotel? {
         return hotelsStorage.firstOrNull { it.id == id }
     }
+
+    override suspend fun add(hotel: Hotel) {
+        hotelsStorage.add(hotel)
+    }
 }

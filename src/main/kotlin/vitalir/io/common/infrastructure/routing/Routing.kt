@@ -7,9 +7,9 @@ import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
 import vitalir.io.common.infrastructure.AppConfig
 import vitalir.io.common.infrastructure.grpc.gRPC
-import vitalir.io.feature.hotels.application.GrpcHotelMapper
+import vitalir.io.feature.hotels.infrastructure.grpc.GrpcHotelMapper
 import vitalir.io.feature.hotels.domain.Hotel
-import vitalir.io.feature.hotels.infrastructure.GrpcHotelsService
+import vitalir.io.feature.hotels.infrastructure.grpc.GrpcHotelsService
 import vitalir.io.feature.hotels.infrastructure.InMemoryHotelsRepository
 import vitalir.io.feature.hotels.infrastructure.graphql.GraphQLHotelMapper
 import vitalir.io.feature.hotels.infrastructure.graphql.hotelsSchema

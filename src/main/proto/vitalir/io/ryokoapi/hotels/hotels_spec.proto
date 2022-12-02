@@ -3,10 +3,13 @@ package vitalir.io.ryokoapi.hotels;
 option java_package = "vitalir.io.hotels";
 
 import "vitalir/io/ryokoapi/hotels/hotels.proto";
+import "google/protobuf/empty.proto";
 
 service HotelsService {
 
   rpc GetHotel (GetHotelRequest) returns (GetHotelResponse);
+
+  rpc AddHotel (AddHotelRequest) returns (google.protobuf.Empty);
 }
 
 message GetHotelRequest {
@@ -14,5 +17,9 @@ message GetHotelRequest {
 }
 
 message GetHotelResponse {
+  Hotel hotel = 1;
+}
+
+message AddHotelRequest {
   Hotel hotel = 1;
 }

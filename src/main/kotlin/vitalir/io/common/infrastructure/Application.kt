@@ -8,7 +8,7 @@ import vitalir.io.common.infrastructure.routing.configureRouting
 val appConfig = AppConfig(
     port = 8080,
     host = "0.0.0.0",
-    networkApiType = AppConfig.NetworkApiType.GRAPHQL,
+    networkApiType = AppConfig.NetworkApiType.GRPC,
 )
 
 fun main() {
