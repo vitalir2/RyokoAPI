@@ -1,4 +1,4 @@
-package vitalir.io.feature.hotels.application
+package vitalir.io.feature.hotels.infrastructure
 
 import vitalir.io.feature.hotels.domain.Hotel
 

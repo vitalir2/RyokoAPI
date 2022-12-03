@@ -3,7 +3,7 @@ package vitalir.io.feature.hotels.infrastructure.grpc
 import com.google.protobuf.Empty
 import io.grpc.Status
 import io.grpc.StatusException
-import vitalir.io.feature.hotels.application.ApiHotelMapper
+import vitalir.io.feature.hotels.infrastructure.ApiHotelMapper
 import vitalir.io.feature.hotels.domain.Hotel
 import vitalir.io.feature.hotels.domain.HotelsRepository
 import vitalir.io.hotels.Hotels

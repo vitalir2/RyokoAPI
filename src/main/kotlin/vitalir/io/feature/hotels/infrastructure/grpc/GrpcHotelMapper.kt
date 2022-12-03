@@ -9,7 +9,7 @@ import vitalir.io.common.domain.money.Money
 import vitalir.io.common.domain.time.Duration
 import vitalir.io.common.domain.time.Time
 import vitalir.io.common.infrastructure.DefaultTime
-import vitalir.io.feature.hotels.application.ApiHotelMapper
+import vitalir.io.feature.hotels.infrastructure.ApiHotelMapper
 import vitalir.io.feature.hotels.domain.Hotel
 import vitalir.io.hotels.HotelKt
 import vitalir.io.hotels.Hotels

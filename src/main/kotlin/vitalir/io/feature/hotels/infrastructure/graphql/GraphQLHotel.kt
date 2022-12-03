@@ -1,13 +1,13 @@
 package vitalir.io.feature.hotels.infrastructure.graphql
 
-import vitalir.io.common.domain.time.Duration
+import vitalir.io.common.infrastructure.graphql.GraphQLDayDuration
 import vitalir.io.common.infrastructure.graphql.GraphQLMoney
 
-data class GraphQLHotel(
-    val id: Long,
-    val commonInfo: CommonInfo,
-    val price: GraphQLMoney,
-    val houseRules: HouseRules,
+open class GraphQLHotel(
+    open val id: Long,
+    open val commonInfo: CommonInfo,
+    open val price: GraphQLMoney,
+    open val houseRules: HouseRules,
 ) {
 
     data class CommonInfo(
@@ -34,13 +34,13 @@ data class GraphQLHotel(
 
         data class Facility(
             val name: String,
-            val iconUrl: String?,
+            val iconUrl: String,
         )
     }
 
     data class HouseRules(
-        val checkIn: Duration,
-        val checkOut: Duration,
+        val checkIn: GraphQLDayDuration,
+        val checkOut: GraphQLDayDuration,
         val childPolicy: ChildPolicy?,
         val allowance: Allowance,
     ) {
